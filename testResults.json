@@ -1,0 +1,237 @@
+[
+  {
+    "metric": "Realtime Latency",
+    "label": "Cassandra Centralized",
+    "value": 4.69
+  },
+  {
+    "metric": "Realtime Throughput",
+    "label": "Cassandra Centralized",
+    "value": 4.7
+  },
+  {
+    "metric": "Scalability",
+    "label": "Cassandra Centralized",
+    "value": 10.98
+  },
+  {
+    "metric": "Consistency",
+    "label": "Cassandra Centralized",
+    "value": 10
+  },
+  {
+    "metric": "Realtime Latency",
+    "label": "Cassandra ListPartitioning",
+    "value": 4.53
+  },
+  {
+    "metric": "Realtime Throughput",
+    "label": "Cassandra ListPartitioning",
+    "value": 4.73
+  },
+  {
+    "metric": "Scalability",
+    "label": "Cassandra ListPartitioning",
+    "value": 16.45
+  },
+  {
+    "metric": "Consistency",
+    "label": "Cassandra ListPartitioning",
+    "value": 9.58
+  },
+  {
+    "metric": "Realtime Latency",
+    "label": "Cassandra RangePartitioning",
+    "value": 4.43
+  },
+  {
+    "metric": "Realtime Throughput",
+    "label": "Cassandra RangePartitioning",
+    "value": 4.77
+  },
+  {
+    "metric": "Scalability",
+    "label": "Cassandra RangePartitioning",
+    "value": 43.06
+  },
+  {
+    "metric": "Consistency",
+    "label": "Cassandra RangePartitioning",
+    "value": 9.26
+  },
+  {
+    "metric": "Realtime Latency",
+    "label": "TimescaleDB Centralized",
+    "value": 10.27
+  },
+  {
+    "metric": "Realtime Throughput",
+    "label": "TimescaleDB Centralized",
+    "value": 4.75
+  },
+  {
+    "metric": "Scalability",
+    "label": "TimescaleDB Centralized",
+    "value": 50.93
+  },
+  {
+    "metric": "Consistency",
+    "label": "TimescaleDB Centralized",
+    "value": 10
+  },
+  {
+    "metric": "Realtime Latency",
+    "label": "TimescaleDB RangePartitioning",
+    "value": 8.73
+  },
+  {
+    "metric": "Realtime Throughput",
+    "label": "TimescaleDB RangePartitioning",
+    "value": 4.79
+  },
+  {
+    "metric": "Scalability",
+    "label": "TimescaleDB RangePartitioning",
+    "value": 32.68
+  },
+  {
+    "metric": "Consistency",
+    "label": "TimescaleDB RangePartitioning",
+    "value": 9.46
+  },
+  {
+    "metric": "Realtime Latency",
+    "label": "TimescaleDB ListPartitioning",
+    "value": 9.74
+  },
+  {
+    "metric": "Realtime Throughput",
+    "label": "TimescaleDB ListPartitioning",
+    "value": 4.78
+  },
+  {
+    "metric": "Scalability",
+    "label": "TimescaleDB ListPartitioning",
+    "value": 24.85
+  },
+  {
+    "metric": "Consistency",
+    "label": "TimescaleDB ListPartitioning",
+    "value": 9.72
+  },
+  {
+    "metric": "Realtime Latency",
+    "label": "MongoDB Centralized",
+    "value": 5.27
+  },
+  {
+    "metric": "Realtime Throughput",
+    "label": "MongoDB Centralized",
+    "value": 4.71
+  },
+  {
+    "metric": "Scalability",
+    "label": "MongoDB Centralized",
+    "value": 35.07
+  },
+  {
+    "metric": "Consistency",
+    "label": "MongoDB Centralized",
+    "value": 10
+  },
+  {
+    "metric": "Realtime Latency",
+    "label": "MongoDB RangePartitioning",
+    "value": 5.06
+  },
+  {
+    "metric": "Realtime Throughput",
+    "label": "MongoDB RangePartitioning",
+    "value": 4.85
+  },
+  {
+    "metric": "Scalability",
+    "label": "MongoDB RangePartitioning",
+    "value": 32.32
+  },
+  {
+    "metric": "Consistency",
+    "label": "MongoDB RangePartitioning",
+    "value": 9.2
+  },
+  {
+    "metric": "Realtime Latency",
+    "label": "MongoDB ListPartitioning",
+    "value": 4.88
+  },
+  {
+    "metric": "Realtime Throughput",
+    "label": "MongoDB ListPartitioning",
+    "value": 4.91
+  },
+  {
+    "metric": "Scalability",
+    "label": "MongoDB ListPartitioning",
+    "value": 37.76
+  },
+  {
+    "metric": "Consistency",
+    "label": "MongoDB ListPartitioning",
+    "value": 9.4
+  },
+  {
+    "metric": "Fault Tolerance",
+    "label": "Cassandra Centralized",
+    "value": 9,
+    "duration": 158
+  },
+  {
+    "metric": "Fault Tolerance",
+    "label": "Cassandra ListPartitioning",
+    "value": 8,
+    "duration": 205
+  },
+  {
+    "metric": "Fault Tolerance",
+    "label": "Cassandra RangePartitioning",
+    "value": 9,
+    "duration": 146
+  },
+  {
+    "metric": "Fault Tolerance",
+    "label": "MongoDB Centralized",
+    "value": 10,
+    "duration": 54
+  },
+  {
+    "metric": "Fault Tolerance",
+    "label": "MongoDB RangePartitioning",
+    "value": 9,
+    "duration": 120
+  },
+  {
+    "metric": "Fault Tolerance",
+    "label": "MongoDB ListPartitioning",
+    "value": 9,
+    "duration": 130
+  },
+
+  {
+    "metric": "Fault Tolerance",
+    "label": "TimescaleDB RangePartitioning",
+    "value": 10,
+    "duration": 53
+  },
+  {
+    "metric": "Fault Tolerance",
+    "label": "TimescaleDB ListPartitioning",
+    "value": 10,
+    "duration": 35
+  },
+  {
+    "metric": "Fault Tolerance",
+    "label": "TimescaleDB Centralized",
+    "value": 10,
+    "duration": 34
+  }
+]
