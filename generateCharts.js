@@ -26,9 +26,9 @@ const normalizeLabel = (label) => {
     name = "Cassandra (Range-Based Partitioning)";
   } else if (label.includes("Cassandra Centralized")) {
     name = "Cassandra Centralized";
-  } else if (label.includes("MongoDB edge_list_partitioning")) {
+  } else if (label.includes("MongoDB ListPartitioning")) {
     name = "MongoDB (List-Based Sharding)";
-  } else if (label.includes("MongoDB edge_range_partitioning")) {
+  } else if (label.includes("MongoDB RangePartitioning")) {
     name = "MongoDB (Range-Based Sharding)";
   } else if (label.includes("MongoDB Centralized")) {
     name = "MongoDB Centralized";

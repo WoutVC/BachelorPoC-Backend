@@ -5,7 +5,6 @@ const { v4: uuidv4 } = require("uuid");
 const { performance } = require("perf_hooks");
 const fs = require("fs");
 
-const NUM_RECORDS = 100;
 const REPEAT_RUNS = 5;   // aantal herhalingen per test voor gemiddelde
 
 function sleep(ms) {
@@ -25,8 +24,6 @@ function generateSensorData(building = "Building A", room = "Room 1") {
     room
   };
 }
-
-const offlineBuffer = {};
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -141,26 +138,6 @@ async function runWithAverage(testFn, args, label, metric) {
   testResults.push({ metric, label, value: parseFloat(avg.toFixed(2)) });
 }
 
-/*async function testLatency(queryFn, label) {
-  const start = performance.now();
-  for (let i = 0; i < NUM_RECORDS; i++) {
-    await executeQuery(queryFn,);
-  }
-  const end = performance.now();
-  return (end - start) / NUM_RECORDS;
-}
-
-async function testThroughput(queryFn, label) {
-  const start = performance.now();
-  const promises = [];
-  for (let i = 0; i < NUM_RECORDS; i++) {
-    promises.push(executeQuery(queryFn));
-  }
-  await Promise.all(promises);
-  const end = performance.now();
-  return NUM_RECORDS / ((end - start) / 1000);
-}*/
-
 async function testRealtimeLatency(queryFn, label, intervalMs = 1000, durationSeconds = 10) {
   const records = Math.max(1, Math.floor(durationSeconds * 1000 / intervalMs));
   let totalLatency = 0;
@@ -203,13 +180,6 @@ async function testScalability(queryFn, label, scaleFactors) {
     console.log(`${label} Scalability ${factor} ops: ${end - start} ms`);
   }
   const avg = durations.reduce((a, b) => a + b.duration, 0) / durations.length;
-
-  /*testResults.push({
-    metric: "Scalability",
-    label,
-    value: parseFloat(avg.toFixed(2)),
-    details: durations
-  });*/
 
   return avg;
 }
@@ -304,13 +274,6 @@ async function testConsistency(client, queryFn, label) {
 
   const finalScore = resultsOverTime[resultsOverTime.length - 1].score;
 
-  /*testResults.push({
-    metric: "Consistency",
-    label,
-    value: finalScore,
-    timeline: resultsOverTime
-  });*/
-
   console.log(`✅ Consistency for ${label}: ${finalScore}/10`);
   return finalScore;
 }
@@ -362,121 +325,6 @@ function mapDurationToScore(durationMs) {
   if (durationMs < 2000) return 2;
   return 1; // Minimale score: herstel duurde lang, maar is nog steeds succesvol afgerond
 }
-
-/*async function testOfflineBehavior(edgeClients, label) {
-  console.log(`\n🔌 Testing Offline Behavior for ${label} (Edge zonder centrale verbinding)...`);
-
-  try {
-    for (const [name, client] of Object.entries(edgeClients)) {
-      console.log(`➡ Simulatie van lokaal schrijven in ${name}...`);
-
-      for (let i = 0; i < 10; i++) {
-        const sensorData = {
-          Id: uuidv4(),
-          timestamp: new Date(),
-          temperature: Math.random() * 100,
-          co2: Math.random() * 1000,
-          pressure: Math.random() * 1000,
-          building: "Building A",
-          room: "Room 101"
-        };
-
-        if (name.includes("MongoDB")) {
-          if (!client.isConnected || !client.topology || !client.topology.isConnected()) {
-            if (!offlineBuffer[name]) offlineBuffer[name] = [];
-            offlineBuffer[name].push(sensorData);
-          } else {
-            await executeQuery(() =>
-              client.db("edge_building_b").collection("sensor_data").insertOne(sensorData)
-            );
-          }
-        } else if (name.includes("TimescaleDB")) {
-          await executeQuery(() =>
-            client.query(
-              "INSERT INTO sensor_data (id, timestamp, temperature, co2, pressure, building, room) VALUES ($1, $2, $3, $4, $5, $6, $7)",
-              [
-                sensorData.Id,
-                sensorData.timestamp,
-                sensorData.temperature,
-                sensorData.co2,
-                sensorData.pressure,
-                sensorData.building,
-                sensorData.room,
-              ]
-            )
-          );
-        } else if (name.includes("Cassandra")) {
-          await executeQuery(() =>
-            client.execute(
-              "INSERT INTO sensor_data (id, timestamp, temperature, co2, pressure, building, room) VALUES (?, ?, ?, ?, ?, ?, ?)",
-              [
-                sensorData.Id,
-                sensorData.timestamp,
-                sensorData.temperature,
-                sensorData.co2,
-                sensorData.pressure,
-                sensorData.building,
-                sensorData.room,
-              ],
-              { prepare: true }
-            )
-          );
-        }
-      }
-
-      console.log(`✅ ${name} operationeel zonder centrale connectie`);
-      testResults.push({ metric: "Offline Behavior", label: name, value: "Operational" });
-    }
-  } catch (err) {
-    console.error(`❌ Fout tijdens offline gedragstest:`, err);
-    testResults.push({ metric: "Offline Behavior", label, value: "Failed" });
-  }
-}*/
-
-/*async function testRealtimeLatency(client, queryFn, label, intervalMs = 1000, durationSeconds = 10) {
-  console.log(`\n📡 Realtime Latency Test for ${label}...`);
-  const records = Math.floor(durationSeconds * 1000 / intervalMs);
-  let totalLatency = 0;
-
-  for (let i = 0; i < records; i++) {
-    const start = performance.now();
-    try {
-      await executeQuery(queryFn);
-    } catch (error) {
-      console.error(`Latency error at ${i}:`, error);
-    }
-    const end = performance.now();
-    const latency = end - start;
-    totalLatency += latency;
-    await sleep(intervalMs);
-  }
-
-  const avgLatency = (totalLatency / records).toFixed(2);
-  console.log(`${label} Avg Latency (real-time): ${avgLatency} ms`);
-  testResults.push({ metric: "Realtime Latency", label, value: parseFloat(avgLatency) });
-}
-
-async function testRealtimeThroughput(client, queryFn, label, intervalMs = 200, durationSeconds = 10) {
-  console.log(`\n🚀 Realtime Throughput Test for ${label}...`);
-  let operationCount = 0;
-  const start = performance.now();
-  const endTime = start + durationSeconds * 1000;
-
-  while (performance.now() < endTime) {
-    try {
-      await executeQuery(queryFn);
-      operationCount++;
-    } catch (err) {
-      console.error("Throughput error:", err);
-    }
-    await sleep(intervalMs);
-  }
-
-  const end = performance.now();
-  const throughput = (operationCount / ((end - start) / 1000)).toFixed(2);
-  console.log(`${label} Throughput (real-time): ${throughput} ops/sec`);
-  testResults.push({ metric: "Realtime Throughput", label, value: parseFloat(throughput) });
-}*/
 
 (async () => {
   try {
@@ -861,16 +709,6 @@ async function testRealtimeThroughput(client, queryFn, label, intervalMs = 200, 
         port: 5444,
       }));
     }
-    
-    /*await testOfflineBehavior(
-      {
-        [`MongoDB ${mongoShardedConfigs[0].dbName}`]: mongoShardedClients[0],
-        [`MongoDB ${mongoShardedConfigs[1].dbName}`]: mongoShardedClients[1],
-        'TimescaleDB Range-Based Partitioning': timescalePartitionedConfigs[0].client,
-        'Cassandra ListPartitioning': cassandraPartitionedConfigs[0].client,
-      },
-      'Edge Only Test'
-    );*/
 
     saveResultsToFile();
 
